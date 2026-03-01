@@ -102,5 +102,20 @@
     <a href="https://web-truong.onrender.com">Về trang chính</a>
   </div>
 </div>
+<script>
+let popup = document.getElementById("homePopup");
+
+function showHome(){
+  popup.style.display = "block";
+}
+
+function closeHome(){
+  popup.style.display = "none";
+  setTimeout(showHome, 5000); // 5 giây hiện lại
+}
+
+// hiện lần đầu sau 5 giây
+setTimeout(showHome, 5000);
+</script>
 </body>
 </html>

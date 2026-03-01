@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Lớp 12/2 - THPT Nguyễn Văn Cừ</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="7.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+  <img src="logo2.jpg" class="logo-img">
+  LỚP 12/2 – THPT NGUYỄN VĂN CỪ
+</div>
+  <nav>
+    <a href="#home">Trang chủ</a>
+    <a href="#thanhtich">Thành tích</a>
+    <a href="https://www.facebook.com/share/1CpgQhx9bF/" target="_blank">
+      <i class="fa-brands fa-facebook"></i> Fanpage
+    </a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <img src="7.png" class="hero-img">
+  <div class="hero-text">
+    <h1>WELCOME</h1>
+    <h2>TO</h2>
+    <h3>CLASS 12/2</h3>
+  </div>
+</section>
+
+<!-- THÀNH TÍCH -->
+<section class="about" id="thanhtich">
+  <h2><i class="fa-solid fa-trophy"></i> * Đáng nổi bật *</h2>
+
+  <ul class="achievements">
+    <li><i class="fa-solid fa-medal"></i> Nhất thi đua toàn trường năm học 2024-2025</li>
+    <li><i class="fa-solid fa-flag"></i> Nhất ngày đoàn viên</li>
+    <li><i class="fa-solid fa-music"></i> Nhất cuộc thi Bước nhảy thanh xuân</li>
+    <li><i class="fa-solid fa-scale-balanced"></i> Giải Nhất tìm hiểu Luật phòng chống ma túy</li>
+    <li><i class="fa-solid fa-flask"></i> Nhất KHKT cấp trường, Giải Ba cấp tỉnh</li>
+    <li><i class="fa-solid fa-lightbulb"></i> Nhất – Nhì – Ba ý tưởng khởi nghiệp</li>
+    <li><i class="fa-solid fa-user-graduate"></i> Học sinh giỏi cấp tỉnh</li>
+    <li><i class="fa-solid fa-volleyball"></i> Nhì bóng đá nữ, Nhì bóng chuyền nữ</li>
+  </ul>
+
+  <!-- BONG BÓNG -->
+  <div class="years">
+    <div class="year" onclick="openModal('Năm Lớp 10')">Lớp 10</div>
+    <div class="year" onclick="openModal('Năm Lớp 11')">Lớp 11</div>
+    <div class="year" onclick="openModal('Năm Lớp 12')">Lớp 12</div>
+  </div>
+</section>
+
+<!-- NÚT MESSENGER -->
+<a href="https://m.me/khangzt.pk" target="_blank" class="messenger-float">
+  <i class="fa-brands fa-facebook-messenger"></i>
+</a>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">✖</span>
+    <h3 id="modal-title"></h3>
+    <textarea placeholder="Nhập thông tin cho năm học..."></textarea>
+  </div>
+</div>
+
+<footer>
+  <p>📞 SĐT: 0354020991</p>
+  <p>
+    Made by 
+    <a href="https://www.facebook.com/khangzt.pk?locale=vi_VN" target="_blank" style="color:white;">
+      A2K40 | Phuc Khang
+    </a>
+  </p>
+</footer>
+
+<!-- MUSIC -->
+<div class="music-icon" id="musicIcon" onclick="toggleMusic()">
+  <i class="fa-solid fa-play" id="musicIconInner"></i>
+</div>
+
+<div class="music-notes">
+  <span>♪</span>
+  <span>♫</span>
+  <span>♬</span>
+</div>
+
+<div class="song-name" id="songName">⏸ Chưa phát</div>
+
+<script src="script.js"></script>
+</body>
+</html>

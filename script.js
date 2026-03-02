@@ -120,6 +120,14 @@ students.forEach(s=>{
   list.appendChild(div);
 });
 
+let index = 0;
+setInterval(()=>{
+  index++;
+  if(index > students.length-4) index=0;
+  document.getElementById("studentList").style.transform =
+    `translateX(-${index*130}px)`;
+}, 2500);
+
 function openStudent(s){
   document.getElementById("studentImg").src = s.img;
   document.getElementById("studentName").innerText = s.name;
@@ -129,4 +137,22 @@ function openStudent(s){
 
 function closeStudent(){
   document.getElementById("studentModal").style.display="none";
+}
+
+let currentStudent = null;
+
+function openStudent(s){
+  currentStudent = s;
+  document.getElementById("studentImg").src = s.img;
+  document.getElementById("studentName").innerText = s.name;
+  document.getElementById("studentDob").innerText = "Ngày sinh: " + s.dob;
+  document.getElementById("dreamInput").value =
+    localStorage.getItem(s.name) || "";
+  document.getElementById("studentModal").style.display="flex";
+}
+
+function saveDream(){
+  localStorage.setItem(currentStudent.name,
+    document.getElementById("dreamInput").value);
+  alert("Đã lưu ước mơ!");
 }

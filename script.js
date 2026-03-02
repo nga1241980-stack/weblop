@@ -123,12 +123,15 @@ students.forEach(s=>{
   slider.appendChild(div);
 });
 
-let index=0;
+let slideIndex = 0;
+
 setInterval(()=>{
-  index++;
-  if(index > students.length-3) index=0;
-  slider.style.transform = `translateX(${-index*180}px)`;
-},3000);
+  slideIndex++;
+  if(slideIndex > students.length - 3){
+    slideIndex = 0;
+  }
+  slider.style.transform = `translateX(${-slideIndex * 180}px)`;
+}, 3000);
 let currentStudent = null;
 
 function openStudent(s){

@@ -465,3 +465,29 @@ footer{
   color:white;
   border-radius:6px;
 }
+
+.student-slider{
+  width:100%;
+  overflow:hidden;
+  margin:20px auto;
+}
+
+.slider-track{
+  display:flex;
+  transition: transform 0.5s ease;
+}
+
+.student-card{
+  min-width:160px;
+  margin:10px;
+  background:white;
+  border-radius:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  text-align:center;
+  padding:10px;
+}
+
+.student-card img{
+  width:100%;
+  border-radius:10px;
+}

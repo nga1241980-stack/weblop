@@ -429,3 +429,39 @@ footer{
   from {transform: scale(0.7); opacity:0;}
   to {transform: scale(1); opacity:1;}
 }
+
+
+.student-slider{
+  overflow:hidden;
+  width:100%;
+  max-width:400px;
+  margin:auto;
+  border-radius:12px;
+  background:#eaf0ff;
+  padding:10px;
+}
+
+.student-track{
+  display:flex;
+  transition:0.5s;
+}
+
+.student-item{
+  min-width:120px;
+  margin:0 5px;
+}
+
+#dreamInput{
+  width:100%;
+  border-radius:8px;
+  padding:8px;
+  margin-top:10px;
+}
+.student-box button{
+  margin-top:8px;
+  padding:6px 12px;
+  border:none;
+  background:#0b5ed7;
+  color:white;
+  border-radius:6px;
+}

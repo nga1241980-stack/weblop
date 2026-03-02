@@ -59,7 +59,9 @@
 
 <section class="students">
   <h2>Danh sách học sinh lớp 12/2</h2>
-  <div id="studentList"></div>
+  <div class="student-slider">
+  <div class="student-track" id="studentList"></div>
+  </div>
 </section>
 
 <div class="student-modal" id="studentModal">
@@ -68,6 +70,9 @@
     <img id="studentImg">
     <h3 id="studentName"></h3>
     <p id="studentDob"></p>
+
+    <textarea id="dreamInput" placeholder="Nhập ước mơ của bạn..."></textarea>
+    <button onclick="saveDream()">Lưu ước mơ</button>
   </div>
 </div>
   

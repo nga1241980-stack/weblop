@@ -472,7 +472,7 @@ footer{
   margin:20px auto;
 }
 
-.slider-track{
+.student-track{
   display:flex;
   transition: transform 0.5s ease;
 }

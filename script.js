@@ -65,7 +65,7 @@ document.body.addEventListener("click", function(){
 },{once:true});
 
 // ===== DANH SÁCH HỌC SINH =====
-let students = [
+const students = [
  {name:"Nguyễn Phạm Ngọc Ân", dob:"26/02/2008", img:"images/nguyen-pham-ngoc-an.jpg"},
  {name:"Nguyễn Thị Minh Châu", dob:"30/03/2008", img:"images/nguyen-thi-minh-chau.jpg"},
  {name:"Phùng Ngọc Danh", dob:"14/12/2008", img:"images/phung-ngoc-danh.jpg"},
@@ -110,35 +110,25 @@ let students = [
  {name:"Lê Quang Ý", dob:"08/10/2008", img:"images/le-quang-y.jpg"}
 ];
 
-let list = document.getElementById("studentList");
+const slider = document.getElementById("studentSlider");
 
 students.forEach(s=>{
-  let div = document.createElement("div");
-  div.className = "student-item";
-  div.innerText = s.name;
-  div.onclick = ()=>openStudent(s);
-  list.appendChild(div);
+  const div = document.createElement("div");
+  div.className="student-card";
+  div.innerHTML=`
+    <img src="${s.img}">
+    <p>${s.name}</p>
+  `;
+  div.onclick=()=>openStudent(s);
+  slider.appendChild(div);
 });
 
-let index = 0;
+let index=0;
 setInterval(()=>{
   index++;
-  if(index > students.length-4) index=0;
-  document.getElementById("studentList").style.transform =
-    `translateX(-${index*130}px)`;
-}, 2500);
-
-function openStudent(s){
-  document.getElementById("studentImg").src = s.img;
-  document.getElementById("studentName").innerText = s.name;
-  document.getElementById("studentDob").innerText = "Ngày sinh: " + s.dob;
-  document.getElementById("studentModal").style.display="flex";
-}
-
-function closeStudent(){
-  document.getElementById("studentModal").style.display="none";
-}
-
+  if(index > students.length-3) index=0;
+  slider.style.transform = `translateX(${-index*180}px)`;
+},3000);
 let currentStudent = null;
 
 function openStudent(s){

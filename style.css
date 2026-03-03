@@ -468,13 +468,30 @@ footer{
 
 .student-slider{
   width:100%;
-  overflow:hidden;
+  overflow-x:auto;          /* BẬT THANH TRƯỢT */
+  overflow-y:hidden;
   margin:20px auto;
+  scrollbar-width: thin;    /* Firefox */
 }
 
 .student-track{
   display:flex;
-  transition: transform 0.5s ease;
+  gap:10px;
+  padding:10px;
+  width:max-content;        /* để nó dài theo số card */
+}
+
+/* style scrollbar cho Chrome */
+.student-slider::-webkit-scrollbar{
+  height:8px;
+}
+.student-slider::-webkit-scrollbar-track{
+  background:#ddd;
+  border-radius:10px;
+}
+.student-slider::-webkit-scrollbar-thumb{
+  background:#0b5ed7;
+  border-radius:10px;
 }
 
 .student-card{

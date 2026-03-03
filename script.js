@@ -166,7 +166,7 @@ sliderBox.addEventListener("touchmove", e=>{
 
 sliderBox.addEventListener("touchend", ()=>{
   isDown = false;
-  momentum();
+  prevX = currentX();
 });
 
 /* MOUSE */
@@ -190,26 +190,12 @@ sliderBox.addEventListener("mousemove", e=>{
 
 sliderBox.addEventListener("mouseup", ()=>{
   isDown = false;
-  momentum();
+  prevX = currentX();
 });
 
 sliderBox.addEventListener("mouseleave", ()=>{
   isDown = false;
 });
-
-/* QUÁN TÍNH */
-function momentum(){
-  let friction = 0.95;
-  function move(){
-    if(Math.abs(velocity) < 0.01) return;
-    currentX += velocity * 10;
-    velocity *= friction;
-    applyBounds();
-    sliderTrack.style.transform = `translateX(${currentX}px)`;
-    requestAnimationFrame(move);
-  }
-  move();
-}
 
 /* GIỚI HẠN */
 function applyBounds(){

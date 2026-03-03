@@ -157,7 +157,7 @@ sliderBox.addEventListener("touchstart", e=>{
 sliderBox.addEventListener("touchmove", e=>{
   if(!isDown) return;
   let now = Date.now();
-  let dx = e.touches[0].clientX - startX;
+  let dx = e.touches[0].clientX - startX) * 1.8;
   currentX = prevX + dx;
   velocity = dx / (now - lastTime);
   lastTime = now;
@@ -181,7 +181,7 @@ sliderBox.addEventListener("mousedown", e=>{
 sliderBox.addEventListener("mousemove", e=>{
   if(!isDown) return;
   let now = Date.now();
-  let dx = e.clientX - startX;
+  let dx = e.clientX - startX) * 1.8;
   currentX = prevX + dx;
   velocity = dx / (now - lastTime);
   lastTime = now;

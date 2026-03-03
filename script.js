@@ -123,53 +123,6 @@ students.forEach(s=>{
   slider.appendChild(div);
 });
 
-let sliderBox = document.querySelector(".student-slider");
-let sliderTrack = document.getElementById("studentSlider");
-
-// ===== WHEEL SCROLL =====
-sliderBox.addEventListener("wheel", e=>{
-  e.preventDefault();
-  currentX -= e.deltaY;
-  applyBounds();
-  sliderTrack.style.transform = `translateX(${currentX}px)`;
-},{passive:false});
-
-// ===== TOUCH =====
-sliderBox.addEventListener("touchstart", e=>{
-  isDown = true;
-  startX = e.touches[0].clientX;
-  prevX = currentX;
-});
-
-sliderBox.addEventListener("touchmove", e=>{
-  if(!isDown) return;
-  let dx = e.touches[0].clientX - startX;
-  currentX = prevX + dx;
-  applyBounds();
-  sliderTrack.style.transform = `translateX(${currentX}px)`;
-});
-
-sliderBox.addEventListener("touchend", ()=>{
-  isDown = false;
-});
-
-// ===== MOUSE DRAG =====
-sliderBox.addEventListener("mousedown", e=>{
-  isDown = true;
-  startX = e.clientX;
-  prevX = currentX;
-});
-
-sliderBox.addEventListener("mousemove", e=>{
-  if(!isDown) return;
-  let dx = e.clientX - startX;
-  currentX = prevX + dx;
-  applyBounds();
-  sliderTrack.style.transform = `translateX(${currentX}px)`;
-});
-
-sliderBox.addEventListener("mouseup", ()=> isDown=false);
-sliderBox.addEventListener("mouseleave", ()=> isDown=false);
 let currentStudent = null;
 
 function openStudent(s){

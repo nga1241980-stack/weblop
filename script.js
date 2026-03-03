@@ -126,85 +126,50 @@ students.forEach(s=>{
 let sliderBox = document.querySelector(".student-slider");
 let sliderTrack = document.getElementById("studentSlider");
 
-let isDown = false;
-let startX;
-let currentX = 0;
-let prevX = 0;
-let velocity = 0;
-let autoSpeed = 0.2; // tốc độ auto (0.15 chậm, 0.25 vừa, 0.4 nhanh)
-let lastTime = 0;
-
-/* AUTO RUN */
-function autoRun(time){
-  if(!isDown){
-    currentX -= autoSpeed;
-  }
+// ===== WHEEL SCROLL =====
+sliderBox.addEventListener("wheel", e=>{
+  e.preventDefault();
+  currentX -= e.deltaY;
   applyBounds();
   sliderTrack.style.transform = `translateX(${currentX}px)`;
-  requestAnimationFrame(autoRun);
-}
-requestAnimationFrame(autoRun);
+},{passive:false});
 
-/* TOUCH */
+// ===== TOUCH =====
 sliderBox.addEventListener("touchstart", e=>{
   isDown = true;
   startX = e.touches[0].clientX;
   prevX = currentX;
-  velocity = 0;
-  lastTime = Date.now();
 });
 
 sliderBox.addEventListener("touchmove", e=>{
   if(!isDown) return;
-  let now = Date.now();
-  let dx = (e.touches[0].clientX - startX) * 1.8;
+  let dx = e.touches[0].clientX - startX;
   currentX = prevX + dx;
-  velocity = dx / (now - lastTime);
-  lastTime = now;
+  applyBounds();
   sliderTrack.style.transform = `translateX(${currentX}px)`;
 });
 
 sliderBox.addEventListener("touchend", ()=>{
   isDown = false;
-  prevX = currentX();
 });
 
-/* MOUSE */
+// ===== MOUSE DRAG =====
 sliderBox.addEventListener("mousedown", e=>{
   isDown = true;
   startX = e.clientX;
   prevX = currentX;
-  velocity = 0;
-  lastTime = Date.now();
 });
 
 sliderBox.addEventListener("mousemove", e=>{
   if(!isDown) return;
-  let now = Date.now();
-  let dx = (e.clientX - startX) * 1.8;
+  let dx = e.clientX - startX;
   currentX = prevX + dx;
-  velocity = dx / (now - lastTime);
-  lastTime = now;
+  applyBounds();
   sliderTrack.style.transform = `translateX(${currentX}px)`;
 });
 
-sliderBox.addEventListener("mouseup", ()=>{
-  isDown = false;
-  prevX = currentX();
-});
-
-sliderBox.addEventListener("mouseleave", ()=>{
-  isDown = false;
-});
-
-/* GIỚI HẠN */
-function applyBounds(){
-  let max = 0;
-  let min = -(sliderTrack.scrollWidth - sliderBox.offsetWidth);
-
-  if(currentX > max) currentX = max;
-  if(currentX < min) currentX = min;
-}
+sliderBox.addEventListener("mouseup", ()=> isDown=false);
+sliderBox.addEventListener("mouseleave", ()=> isDown=false);
 let currentStudent = null;
 
 function openStudent(s){
@@ -226,3 +191,9 @@ function saveDream(){
 function closeStudent(){
   document.getElementById("studentModal").style.display = "none";
 }
+
+document.querySelectorAll(".flip-card").forEach(card=>{
+  card.addEventListener("click", ()=>{
+    card.classList.toggle("active");
+  });
+});

@@ -236,3 +236,7 @@ function saveDream(){
     document.getElementById("dreamInput").value);
   alert("Đã lưu ước mơ!");
 }
+
+function closeStudent(){
+  document.getElementById("studentModal").style.display = "none";
+}

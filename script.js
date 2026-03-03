@@ -123,15 +123,38 @@ students.forEach(s=>{
   slider.appendChild(div);
 });
 
-let slideIndex = 0;
+let startX = 0;
+let currentTranslate = 0;
+let prevTranslate = 0;
+let isDragging = false;
 
-setInterval(()=>{
-  slideIndex++;
-  if(slideIndex > students.length - 3){
-    slideIndex = 0;
-  }
-  slider.style.transform = `translateX(${-slideIndex * 180}px)`;
-}, 3000);
+const sliderBox = document.querySelector(".student-slider");
+
+sliderBox.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+  isDragging = true;
+});
+
+sliderBox.addEventListener("touchmove", e => {
+  if(!isDragging) return;
+  let currentX = e.touches[0].clientX;
+  let diff = currentX - startX;
+  slider.style.transform = `translateX(${prevTranslate + diff}px)`;
+});
+
+sliderBox.addEventListener("touchend", e => {
+  isDragging = false;
+  prevTranslate =
+    slider.getBoundingClientRect().left -
+    sliderBox.getBoundingClientRect().left;
+
+  if(prevTranslate > 0) prevTranslate = 0;
+
+  let maxTranslate = -(slider.scrollWidth - sliderBox.offsetWidth);
+  if(prevTranslate < maxTranslate) prevTranslate = maxTranslate;
+
+  slider.style.transform = `translateX(${prevTranslate}px)`;
+});
 let currentStudent = null;
 
 function openStudent(s){

@@ -202,7 +202,7 @@ function momentum(){
   let friction = 0.95;
   function move(){
     if(Math.abs(velocity) < 0.01) return;
-    currentX += velocity * 20;
+    currentX += velocity * 10;
     velocity *= friction;
     applyBounds();
     sliderTrack.style.transform = `translateX(${currentX}px)`;

@@ -123,37 +123,78 @@ students.forEach(s=>{
   slider.appendChild(div);
 });
 
+let sliderBox = document.querySelector(".student-slider");
+let sliderTrack = document.getElementById("studentSlider");
+
+let isDragging = false;
 let startX = 0;
 let currentTranslate = 0;
 let prevTranslate = 0;
-let isDragging = false;
+let autoSpeed = -0.3; // tốc độ tự chạy (đổi -0.2 chậm hơn, -0.5 nhanh hơn)
 
-const sliderBox = document.querySelector(".student-slider");
+/* ===== AUTO SLIDE ===== */
+function autoSlide(){
+  if(!isDragging){
+    currentTranslate += autoSpeed;
 
-sliderBox.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
+    let maxTranslate = -(sliderTrack.scrollWidth - sliderBox.offsetWidth);
+
+    if(currentTranslate < maxTranslate){
+      currentTranslate = 0;
+    }
+
+    sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+  }
+
+  requestAnimationFrame(autoSlide);
+}
+autoSlide();
+
+/* ===== TOUCH ===== */
+sliderBox.addEventListener("touchstart", e=>{
   isDragging = true;
+  startX = e.touches[0].clientX;
 });
 
-sliderBox.addEventListener("touchmove", e => {
+sliderBox.addEventListener("touchmove", e=>{
   if(!isDragging) return;
-  let currentX = e.touches[0].clientX;
-  let diff = currentX - startX;
-  slider.style.transform = `translateX(${prevTranslate + diff}px)`;
+  let moveX = e.touches[0].clientX;
+  let diff = (moveX - startX) * 1.8; // độ nhạy
+  currentTranslate = prevTranslate + diff;
+  sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
 });
 
-sliderBox.addEventListener("touchend", e => {
+sliderBox.addEventListener("touchend", ()=>{
   isDragging = false;
-  prevTranslate =
-    slider.getBoundingClientRect().left -
-    sliderBox.getBoundingClientRect().left;
+  prevTranslate = currentTranslate;
 
-  if(prevTranslate > 0) prevTranslate = 0;
+  let maxTranslate = -(sliderTrack.scrollWidth - sliderBox.offsetWidth);
+  if(currentTranslate > 0) currentTranslate = 0;
+  if(currentTranslate < maxTranslate) currentTranslate = maxTranslate;
+});
 
-  let maxTranslate = -(slider.scrollWidth - sliderBox.offsetWidth);
-  if(prevTranslate < maxTranslate) prevTranslate = maxTranslate;
+/* ===== MOUSE (PC) ===== */
+let isMouseDown = false;
 
-  slider.style.transform = `translateX(${prevTranslate}px)`;
+sliderBox.addEventListener("mousedown", e=>{
+  isMouseDown = true;
+  startX = e.clientX;
+});
+
+sliderBox.addEventListener("mousemove", e=>{
+  if(!isMouseDown) return;
+  let diff = (e.clientX - startX) * 1.5;
+  currentTranslate = prevTranslate + diff;
+  sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+});
+
+sliderBox.addEventListener("mouseup", ()=>{
+  isMouseDown = false;
+  prevTranslate = currentTranslate;
+});
+
+sliderBox.addEventListener("mouseleave", ()=>{
+  isMouseDown = false;
 });
 let currentStudent = null;
 

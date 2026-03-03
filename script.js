@@ -126,76 +126,99 @@ students.forEach(s=>{
 let sliderBox = document.querySelector(".student-slider");
 let sliderTrack = document.getElementById("studentSlider");
 
-let isDragging = false;
-let startX = 0;
-let currentTranslate = 0;
-let prevTranslate = 0;
-let autoSpeed = -0.3; // tốc độ tự chạy (đổi -0.2 chậm hơn, -0.5 nhanh hơn)
+let isDown = false;
+let startX;
+let currentX = 0;
+let prevX = 0;
+let velocity = 0;
+let autoSpeed = 0.2; // tốc độ auto (0.15 chậm, 0.25 vừa, 0.4 nhanh)
+let lastTime = 0;
 
-/* ===== AUTO SLIDE ===== */
-function autoSlide(){
-  if(!isDragging){
-    currentTranslate += autoSpeed;
-
-    let maxTranslate = -(sliderTrack.scrollWidth - sliderBox.offsetWidth);
-
-    if(currentTranslate < maxTranslate){
-      currentTranslate = 0;
-    }
-
-    sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+/* AUTO RUN */
+function autoRun(time){
+  if(!isDown){
+    currentX -= autoSpeed;
   }
-
-  requestAnimationFrame(autoSlide);
+  applyBounds();
+  sliderTrack.style.transform = `translateX(${currentX}px)`;
+  requestAnimationFrame(autoRun);
 }
-autoSlide();
+requestAnimationFrame(autoRun);
 
-/* ===== TOUCH ===== */
+/* TOUCH */
 sliderBox.addEventListener("touchstart", e=>{
-  isDragging = true;
+  isDown = true;
   startX = e.touches[0].clientX;
+  prevX = currentX;
+  velocity = 0;
+  lastTime = Date.now();
 });
 
 sliderBox.addEventListener("touchmove", e=>{
-  if(!isDragging) return;
-  let moveX = e.touches[0].clientX;
-  let diff = (moveX - startX) * 1.8; // độ nhạy
-  currentTranslate = prevTranslate + diff;
-  sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+  if(!isDown) return;
+  let now = Date.now();
+  let dx = e.touches[0].clientX - startX;
+  currentX = prevX + dx;
+  velocity = dx / (now - lastTime);
+  lastTime = now;
+  sliderTrack.style.transform = `translateX(${currentX}px)`;
 });
 
 sliderBox.addEventListener("touchend", ()=>{
-  isDragging = false;
-  prevTranslate = currentTranslate;
-
-  let maxTranslate = -(sliderTrack.scrollWidth - sliderBox.offsetWidth);
-  if(currentTranslate > 0) currentTranslate = 0;
-  if(currentTranslate < maxTranslate) currentTranslate = maxTranslate;
+  isDown = false;
+  momentum();
 });
 
-/* ===== MOUSE (PC) ===== */
-let isMouseDown = false;
-
+/* MOUSE */
 sliderBox.addEventListener("mousedown", e=>{
-  isMouseDown = true;
+  isDown = true;
   startX = e.clientX;
+  prevX = currentX;
+  velocity = 0;
+  lastTime = Date.now();
 });
 
 sliderBox.addEventListener("mousemove", e=>{
-  if(!isMouseDown) return;
-  let diff = (e.clientX - startX) * 1.5;
-  currentTranslate = prevTranslate + diff;
-  sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+  if(!isDown) return;
+  let now = Date.now();
+  let dx = e.clientX - startX;
+  currentX = prevX + dx;
+  velocity = dx / (now - lastTime);
+  lastTime = now;
+  sliderTrack.style.transform = `translateX(${currentX}px)`;
 });
 
 sliderBox.addEventListener("mouseup", ()=>{
-  isMouseDown = false;
-  prevTranslate = currentTranslate;
+  isDown = false;
+  momentum();
 });
 
 sliderBox.addEventListener("mouseleave", ()=>{
-  isMouseDown = false;
+  isDown = false;
 });
+
+/* QUÁN TÍNH */
+function momentum(){
+  let friction = 0.95;
+  function move(){
+    if(Math.abs(velocity) < 0.01) return;
+    currentX += velocity * 20;
+    velocity *= friction;
+    applyBounds();
+    sliderTrack.style.transform = `translateX(${currentX}px)`;
+    requestAnimationFrame(move);
+  }
+  move();
+}
+
+/* GIỚI HẠN */
+function applyBounds(){
+  let max = 0;
+  let min = -(sliderTrack.scrollWidth - sliderBox.offsetWidth);
+
+  if(currentX > max) currentX = max;
+  if(currentX < min) currentX = min;
+}
 let currentStudent = null;
 
 function openStudent(s){

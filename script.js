@@ -150,3 +150,43 @@ document.querySelectorAll(".flip-card").forEach(card=>{
     card.classList.toggle("active");
   });
 });
+
+// COUNTDOWN
+const target = new Date("2026-03-05T06:30:00").getTime();
+setInterval(()=>{
+  const now = new Date().getTime();
+  const diff = target - now;
+
+  document.getElementById("days").innerText = Math.floor(diff/86400000);
+  document.getElementById("hours").innerText = Math.floor(diff/3600000)%24;
+  document.getElementById("minutes").innerText = Math.floor(diff/60000)%60;
+  document.getElementById("seconds").innerText = Math.floor(diff/1000)%60;
+},1000);
+
+// BACK TO TOP
+document.getElementById("toTop").onclick = ()=>{
+  window.scrollTo({top:0, behavior:"smooth"});
+};
+
+// FADE SCROLL
+const faders = document.querySelectorAll(".fade");
+window.addEventListener("scroll", ()=>{
+  faders.forEach(el=>{
+    const rect = el.getBoundingClientRect().top;
+    if(rect < window.innerHeight-100){
+      el.classList.add("show");
+    }
+  });
+});
+
+let lastScroll=0;
+const header=document.querySelector("header");
+window.addEventListener("scroll",()=>{
+  let current=window.scrollY;
+  if(current>lastScroll){
+    header.classList.add("hide");
+  }else{
+    header.classList.remove("hide");
+  }
+  lastScroll=current;
+});
